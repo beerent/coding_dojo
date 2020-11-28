@@ -11,23 +11,23 @@ import (
 )
 
 func printHeader() {
-	fmt.Println("Welcome To Rock Paper Scissors Shoot (11/26/2020)")
+	fmt.Println("Welcome To Coding Dojo - Rock Paper Scissors Shoot (11/26/2020)")
 }
 
-func getNumberOfRounds() int {
-	roundsQuestion := "\nBest of how many rounds?"
+func printRoundsHeader(rounds int) {
+	if (rounds == 1) {
+		fmt.Println("\nBest of 1 round. Good luck!")
+	} else {
+		fmt.Println("\nBest of", rounds, "rounds. Good luck!")
+	}
+}
 
-	var rounds int
-    for {
-        rounds = getIntegerInput(roundsQuestion)
-
-    	if rounds % 2 == 1 {
-    		break
-    	}
-    	fmt.Println("must be an odd number of rounds.")
-    }
-
-	return rounds
+func printWinner(winner string) {
+	if winner == "user" {
+		fmt.Println("\nCongratulations! You are the winner.")
+	} else {
+		fmt.Println("\nYou lost! :(")
+	}
 }
 
 func getStringInput(message string) string {
@@ -58,8 +58,33 @@ func getIntegerInput(message string) int {
 	return i
 }
 
-func isValidUserDecision(userDecision string) bool {
-	return userDecision == "r" || userDecision == "p" || userDecision == "s"
+func getFullAttackName(shortname string) (fullname string) {
+	switch shortname {
+		case "r":
+			fullname = "rock"
+		case "p":
+			fullname =  "paper"
+		case "s":
+			fullname = "scissors"
+		}
+
+	return
+}
+
+func getNumberOfRounds() int {
+	roundsQuestion := "\nBest of how many rounds?"
+
+	var rounds int
+    for {
+        rounds = getIntegerInput(roundsQuestion)
+
+    	if rounds % 2 == 1 {
+    		break
+    	}
+    	fmt.Println("must be an odd number of rounds.")
+    }
+
+	return rounds
 }
 
 func getUserDecision() string {
@@ -79,12 +104,8 @@ func getUserDecision() string {
 	return userDecision
 }
 
-func printRoundsHeader(rounds int) {
-	if (rounds == 1) {
-		fmt.Println("\nBest of 1 round. Good luck!")
-	} else {
-		fmt.Println("\nBest of", rounds, "rounds. Good luck!")
-	}
+func isValidUserDecision(userDecision string) bool {
+	return userDecision == "r" || userDecision == "p" || userDecision == "s"
 }
 
 func getComputerDecision() string {
@@ -133,31 +154,10 @@ func getRoundWinner(userDecision, computerDecision string) string {
 	return "tie"
 }
 
-func getFullAttackName(shortname string) (fullname string) {
-	switch shortname {
-		case "r":
-			fullname = "rock"
-		case "p":
-			fullname =  "paper"
-		case "s":
-			fullname = "scissors"
-		}
-
-	return
-}
-
 func printRoundResults(userDecision, computerDecision, roundWinner string) {
 	fmt.Println("User throws\t", getFullAttackName(userDecision))
 	fmt.Println("Computer throws\t", getFullAttackName(computerDecision))
 	fmt.Println(roundWinner + "!")
-}
-
-func winnerIsUser(winner string) bool {
-	return winner == "user"
-}
-
-func winnerIsComputer(winner string) bool {
-	return winner == "computer"
 }
 
 func getWinner(userWins, computerWins, rounds int) (winner string, gameover bool) {
@@ -174,12 +174,12 @@ func getWinner(userWins, computerWins, rounds int) (winner string, gameover bool
 	return "", false
 }
 
-func printWinner (winner string) {
-	if winner == "user" {
-		fmt.Println("\nCongratulations! You are the winner.")
-	} else {
-		fmt.Println("\nYou lost! :(")
-	}
+func winnerIsUser(winner string) bool {
+	return winner == "user"
+}
+
+func winnerIsComputer(winner string) bool {
+	return winner == "computer"
 }
 
 func runGame(rounds int) {
@@ -214,6 +214,5 @@ func runGame(rounds int) {
 
 func main() {
     printHeader()
-    rounds := getNumberOfRounds()
-    runGame(rounds)
+    runGame(getNumberOfRounds())
 }
