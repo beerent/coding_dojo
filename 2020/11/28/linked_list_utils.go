@@ -2,7 +2,6 @@ package linked_list
 
 
 import (
-	"fmt"
 	"strconv"
 )
 
@@ -10,9 +9,11 @@ func add(node *Node, data int) {
 	var nextNode Node
 	nextNode.data = data
 
-	node.next = &nextNode
+	if node.next != nil {
+		nextNode.next = node.next
+	}
 
-	fmt.Println(toString(*node))
+	node.next = &nextNode
 }
 
 //func reverse(list LinkedList) LinkedList {
